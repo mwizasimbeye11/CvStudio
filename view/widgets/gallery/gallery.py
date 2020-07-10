@@ -110,7 +110,7 @@ class GalleryLayout(QGridLayout, QObject):
         GUIUtilities.clear_layout(self)  # clear the gridlayout
 
 
-class Gallery(QWidget, Ui_Gallery, QObject):
+class Gallery(QWidget, QObject,Ui_Gallery):
     doubleClicked = pyqtSignal(GalleryCard, QWidget)
     filesDropped = pyqtSignal(list)
     cardActionClicked = pyqtSignal(str, object)

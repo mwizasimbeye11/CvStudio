@@ -77,7 +77,7 @@ class Ui_GalleryCard(object):
         self.verticalLayout.addWidget(self.buttons_frame)
 
         self.retranslateUi(GalleryCard)
-        QtCore.QMetaObject.connectSlotsByName(GalleryCard)
+        #QtCore.QMetaObject.connectSlotsByName(GalleryCard)
 
     def retranslateUi(self, GalleryCard):
         _translate = QtCore.QCoreApplication.translate

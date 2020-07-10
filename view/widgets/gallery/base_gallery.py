@@ -71,7 +71,7 @@ class Ui_Gallery(object):
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.label = QtWidgets.QLabel(self.center_widget)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("colorEditor")
+        self.label.setObjectName("label")
         self.verticalLayout_4.addWidget(self.label)
         self.scrollArea.setWidget(self.center_widget)
         self.verticalLayout_3.addWidget(self.scrollArea)
@@ -218,7 +218,7 @@ class Ui_Gallery(object):
         self.verticalLayout_2.addWidget(self.frame_2)
 
         self.retranslateUi(Gallery)
-        QtCore.QMetaObject.connectSlotsByName(Gallery)
+        #QtCore.QMetaObject.connectSlotsByName(Gallery)
 
     def retranslateUi(self, Gallery):
         _translate = QtCore.QCoreApplication.translate
@@ -226,5 +226,5 @@ class Ui_Gallery(object):
         self.label.setText(_translate("Gallery", "Drag and Drop your images/videos"))
         self.label_3.setText(_translate("Gallery", "Page"))
         self.lbl_current_page.setText(_translate("Gallery", "0"))
-        self.label_2.setText(_translate("Gallery", "of "))
+        self.label_2.setText(_translate("Gallery", "of"))
         self.lbl_total_pages.setText(_translate("Gallery", "0"))
