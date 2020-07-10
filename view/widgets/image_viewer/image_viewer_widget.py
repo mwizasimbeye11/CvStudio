@@ -145,6 +145,7 @@ class ImageViewerWidget(QWidget, Ui_Image_Viewer_Widget):
     def image(self, value):
         self.image_viewer.image = value
 
+
     @property
     def tag(self):
         return self._tag
@@ -223,7 +224,9 @@ class ImageViewerWidget(QWidget, Ui_Image_Viewer_Widget):
                         if img.file_path == self.tag.file_path:
                             selected_image = item
                     self.images_list_widget.setCurrentItem(selected_image)
+            self._loading_dialog.hide()
 
+        self._loading_dialog.show()
         worker = Worker(do_work)
         worker.signals.result.connect(done_work)
         self._thread_pool.start(worker)
@@ -243,9 +246,10 @@ class ImageViewerWidget(QWidget, Ui_Image_Viewer_Widget):
         return self._labels_dao.fetch_all(dataset_id)
 
     @gui_exception
-    def image_list_sel_changed_slot(self, curr: CustomListWidgetItem, prev: CustomListWidgetItem):
-        self.image, self.tag = cv2.imread(curr.tag.file_path, cv2.IMREAD_COLOR), curr.tag
+    def image_list_sel_changed_slot(self, selected_item: CustomListWidgetItem, prev: CustomListWidgetItem):
+        self.image, self.tag = cv2.imread(selected_item.tag.file_path, cv2.IMREAD_COLOR), selected_item.tag
         self.load_image()
+
 
     @gui_exception
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
@@ -526,34 +530,31 @@ class ImageViewerWidget(QWidget, Ui_Image_Viewer_Widget):
                     img_bbox: QRectF = self.image_viewer.pixmap.sceneBoundingRect()
                     offset = QPointF(img_bbox.width() / 2, img_bbox.height() / 2)
                     for entry in annotations:
-                        try:
-                            vo: AnnotaVO = entry
-                            points = map(float, vo.points.split(","))
-                            points = list(more_itertools.chunked(points, 2))
-                            if vo.kind == "box" or vo.kind == "ellipse":
-                                x = points[0][0] - offset.x()
-                                y = points[0][1] - offset.y()
-                                w = math.fabs(points[0][0] - points[1][0])
-                                h = math.fabs(points[0][1] - points[1][1])
-                                roi: QRectF = QRectF(x, y, w, h)
-                                if vo.kind == "box":
-                                    item = EditableBox(roi)
-                                else:
-                                    item = EditableEllipse()
-                                item.tag = self.tag.dataset
-                                item.setRect(roi)
-                                item.label = vo.label
-                                self.image_viewer.scene().addItem(item)
-                            elif vo.kind == "polygon":
-                                item = EditablePolygon()
-                                item.label = vo.label
-                                item.tag = self.tag.dataset
-                                self.image_viewer.scene().addItem(item)
-                                for p in points:
-                                    item.addPoint(QPoint(p[0] - offset.x(), p[1] - offset.y()))
-                        except Exception as ex:
-                            GUIUtilities.show_error_message("Error loading the annotations: {}".format(ex), "Error")
+                        vo: AnnotaVO = entry
+                        points = map(float, vo.points.split(","))
+                        points = list(more_itertools.chunked(points, 2))
+                        if vo.kind == "box" or vo.kind == "ellipse":
+                            x = points[0][0] - offset.x()
+                            y = points[0][1] - offset.y()
+                            w = math.fabs(points[0][0] - points[1][0])
+                            h = math.fabs(points[0][1] - points[1][1])
+                            roi: QRectF = QRectF(x, y, w, h)
 
+                            if vo.kind == "box":
+                                item = EditableBox(roi)
+                            else:
+                                item = EditableEllipse()
+                            item.tag = self.tag.dataset
+                            item.setRect(roi)
+                            item.label = vo.label
+                            self.image_viewer.scene().addItem(item)
+                        elif vo.kind == "polygon":
+                            item = EditablePolygon()
+                            item.label = vo.label
+                            item.tag = self.tag.dataset
+                            self.image_viewer.scene().addItem(item)
+                            for p in points:
+                                item.addPoint(QPoint(p[0] - offset.x(), p[1] - offset.y()))
         self.image_viewer.remove_annotations()
         worker = Worker(do_work)
         worker.signals.result.connect(done_work)

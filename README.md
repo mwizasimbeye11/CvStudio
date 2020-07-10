@@ -53,22 +53,14 @@ CVStudio supports:
   * Install required libraries:
   
   ```console
-    pip install matplotlib
-    pip install numpy
-    pip install opencv-contrib-python
-    pip install pillow
-    pip install tqdm
-    pip install scipy
-    pip install "dask[complete]"
-    pip install more-itertools
-    pip install pandas
-    pip install PyQt5
-    pip install apptools -U
-    pip install imutils
-    pip install peewee
-    pip install -U marshmallow
-    pip install hurry.filesize
-    pip install Mako    
+    conda install -c anaconda pyqt
+    conda install -c conda-forge dask
+    conda install -c conda-forge opencv
+    conda install -c conda-forge more-itertools
+    conda install -c conda-forge hurry.filesize
+    conda install -c conda-forge mako
+    conda install -c conda-forge imutils    
+    conda install -c conda-forge peewee
     ```
     
   * Install [PyTorch](https://pytorch.org/) with conda following the [instructions](https://pytorch.org/get-started/locally/)

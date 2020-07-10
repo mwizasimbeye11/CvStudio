@@ -2,6 +2,8 @@ import os
 import typing
 import cv2
 import numpy as np
+from PyQt5 import Qt
+import inspect
 from PyQt5 import QtGui
 from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
 from PyQt5.QtWidgets import QLayout, QGridLayout, QLayoutItem, QMessageBox, QApplication, QMainWindow, QVBoxLayout, \
@@ -162,3 +164,9 @@ class GUIUtilities:
         buffer=image.bits().asarray(width*height*channels_count)
         arr=np.frombuffer(buffer,dtype=np.uint8).reshape((height,width,channels_count))
         return arr
+
+    @staticmethod
+    def qt_version():
+        vers = ['%s = %s' % (k, v) for k, v in vars(Qt).items() if
+                k.lower().find('version') >= 0 and not inspect.isbuiltin(v)]
+        print('\n'.join(sorted(vers)))

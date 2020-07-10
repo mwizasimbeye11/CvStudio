@@ -81,7 +81,6 @@ class MediaTabWidget(QWidget):
     def open_file(self, entry: DatasetEntryVO):
         tab_widget_manager: QTabWidget = self.window().tab_widget_manager
         tab_widget = ImageViewerWidget()
-        tab_widget.image = cv2.imread(entry.file_path)
         tab_widget.tag = entry
         tab_widget.bind()
         tab_widget.layout().setContentsMargins(0, 0, 0, 0)

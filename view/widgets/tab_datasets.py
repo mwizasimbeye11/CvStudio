@@ -196,6 +196,7 @@ class DatasetTabWidget(QScrollArea):
         index = tab_widget_manager.addTab(tab_widget, vo.name)
         tab_widget_manager.setCurrentIndex(index)
 
+
     @gui_exception
     def download_annot_action_slot(self, vo: DatasetVO):
         menu = QMenu()

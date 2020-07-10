@@ -152,7 +152,7 @@ class Ui_Image_Viewer_Widget(object):
         self.retranslateUi(Image_Viewer_Widget)
         self.tabWidget.setCurrentIndex(1)
         self.toolBox.setCurrentIndex(1)
-        QtCore.QMetaObject.connectSlotsByName(Image_Viewer_Widget)
+        #QtCore.QMetaObject.connectSlotsByName(Image_Viewer_Widget)
 
     def retranslateUi(self, Image_Viewer_Widget):
         _translate = QtCore.QCoreApplication.translate

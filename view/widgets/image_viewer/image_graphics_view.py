@@ -155,7 +155,6 @@ class ImageViewer(QGraphicsView, QObject):
         pil_image = Image.fromarray(rgb)
         qppixmap_image = pil_image.toqpixmap()
         x, y = -qppixmap_image.width() / 2, -qppixmap_image.height() / 2
-
         if self._pixmap:
             self._pixmap.resetTransform()
             self._pixmap.setPixmap(qppixmap_image)
